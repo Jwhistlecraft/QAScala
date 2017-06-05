@@ -19,18 +19,18 @@
 
     numz(1,2) // operators
 
-    numz2(5,4, true)// conditionals 1
-    numz2(5,4, false)
+    numz2(5,4,true)// conditionals 1
+    numz2(5,4,false)
 
-    numz3(2,0, true)//conditionals 2
-    numz3(0,2, true)
-    numz3(0,0, true)
-    numz3(2,2, true)
+    numz3(2,0,true)//conditionals 2
+    numz3(0,2,true)
+    numz3(0,0,true)
+    numz3(2,2,true)
 
-    numz3(2,0, false)
-    numz3(0,2, false)
-    numz3(0,0, false)
-    numz3(2,2, false)
+    numz3(2,0,false)
+    numz3(0,2,false)
+    numz3(0,0,false)
+    numz3(2,2,false)
 
 
     //Parameter task
@@ -51,7 +51,7 @@
   // Strings
   def strings(word: String, letter: Int ): String =
   {
-(word.substring((word.length - letter), word.length))
+word.substring((word.length - letter), word.length)
   }
   //strings 2
   def strings2(word2: String, word3: String, let2: Char, let3: Char) =
@@ -72,7 +72,7 @@
       {
         println(a+b)
       }
-    else if( bool == false)
+    else if(bool == false)
       {
         println(a*b)
       }
@@ -97,7 +97,7 @@ def numz3(a: Int, b: Int, bool2: Boolean) =
   {
     println(a+b)
   }
-  else if( bool2 == false)
+  else if(bool2 == false)
   {
     println(a*b)
   }
