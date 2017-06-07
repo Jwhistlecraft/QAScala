@@ -99,5 +99,13 @@ def numz3(a: Int, b: Int, bool2: Boolean) = {
   }
 }
 
+numz3(3, 0, true) //conditionals 2
+numz3(0, 2, true)
+numz3(0, 0, true)
+numz3(3, 2, true)
 
+numz3(3, 0, false) //conditionals 2
+numz3(0, 2, false)
+numz3(0, 0, false)
+numz3(3, 2, false)
 

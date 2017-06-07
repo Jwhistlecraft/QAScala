@@ -22,15 +22,15 @@ hsquare("h",4,4)
 
 
 //fizzbuzz in recursive
-def fizzbuzz(inB:Int): Unit ={
-  if (inB<=15){
+def fizzbuzz(inB:Int,upperBound:Int): Unit ={
+  if (inB<=upperBound){
     (inB%3, inB%5) match {
       case (0, 0) => println("fizzbuzz")
       case (0, _) => println("fizz")
       case (_, 0) => println("buzz")
       case _ => println(inB)
     }
-      fizzbuzz(inB+1)
+      fizzbuzz(inB+1,upperBound)
     }
 }
-fizzbuzz(1)
+fizzbuzz(1,100)
