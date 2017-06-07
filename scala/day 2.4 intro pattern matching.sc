@@ -12,7 +12,16 @@
 
 //Patern Matching- conditionals 1
 
+def patNumz(a: Int, b: Int, bool: Boolean): Unit ={
 
+  bool match{
+    case true => println(a + b)
+    case false => println(a * b)
+    case _ => println(0)
+  }
+}
+
+patNumz(2,3,true)
 
 
 
