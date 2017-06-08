@@ -28,9 +28,9 @@ def fizzbuzz(inB:Int,upperBound:Int): Unit ={
       case (0, 0) => println("fizzbuzz")
       case (0, _) => println("fizz")
       case (_, 0) => println("buzz")
-      case _ => println(inB)
+      case _      => println(inB)
     }
       fizzbuzz(inB+1,upperBound)
     }
 }
-fizzbuzz(1,100)
+fizzbuzz(1,15)
