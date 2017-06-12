@@ -33,7 +33,7 @@ object Main {
         println(num1 + " + " + num2 + " = " + num3)
       }
 
-      *if*/ println(num1 + " " + num2 +" "+num3)
+      if println(num1 + " " + num2 +" "+num3)
     }
     println()
   }
