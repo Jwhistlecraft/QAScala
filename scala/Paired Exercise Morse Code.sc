@@ -92,3 +92,4 @@ def humanToMorseCode(message:String)={
 
 print(morseCodeTranslator(morseMessage))
 print(humanToMorseCode(humanMesage))
+

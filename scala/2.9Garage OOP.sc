@@ -1,3 +1,7 @@
+//Task 1
+
+
+
 // Person, employee and customer classes
 
 abstract class Person {
@@ -10,7 +14,6 @@ abstract class Person {
     println(firstName, secondName, age, address)
    }
 }
-
 
 class Employee(var employeeID: String,var jobTitle: String,
                var firstName: String, var secondName: String,
@@ -62,7 +65,32 @@ class Bike(var vehicleID: Int, var model: String, var noTyres: Int, var noSeats:
   override def toString: String = {
    s"vehicleID: $vehicleID, model: $model, number of tyres: $noTyres, number of seats: $noSeats, fault: $fault, fixed?: $fixed"
   }
+
+
 }
+abstract class VehiclePart{
+
+class windshield(cost:Int,broken:Boolean)
+
+class exhaust(cost:Int, broken:Boolean)
+
+class piston(cost:Int, broken:Boolean)
+
+class transmission(cost:Int, broken:Boolean)
+
+class headLights(cost:Int, broken:Boolean)
+
+class breakLights(cost:Int, broken:Boolean)
+
+class rearAxel(cost:Int, broken:Boolean)
+
+class front(cost:Int, broken:Boolean)
+
+class gasket(cost:Int, broken:Boolean)
+
+class fuelLine(cost:Int, broken:Boolean)
+}
+
 
 
 
@@ -104,11 +132,11 @@ class Garage {
 
   // adding vehicle removal functionality by ID and class
 
-  def removeVehicleByID(ID: Int): Unit = { //removing by ID function
+  def removeVehicleByID(ID: Int): Unit = {                 //removing by ID function
     vehicleArrayBuffer = vehicleArrayBuffer.filter(x => !(x.vehicleID == ID))
   }
 
-  def removeVehicleByType(automobile: String): Unit = { //removing by class function
+  def removeVehicleByType(automobile: String): Unit = {    //removing by class function
     automobile match {
       case "Car" => vehicleArrayBuffer = vehicleArrayBuffer.filter(x => x.isInstanceOf[Bike])
       case "Bike" => vehicleArrayBuffer = vehicleArrayBuffer.filter(x => x.isInstanceOf[Car])
@@ -137,64 +165,85 @@ class Garage {
 
   override def toString: String = {
     var outPut: String = ""
-    for (x <- 0 to vehicleArrayBuffer.size - 1) {           //starts ticker through array values
+
+    vehicleArrayBuffer.foreach (vehicle => {
       outPut += (
-        "Vehicle ID: " + vehicleArrayBuffer(x).vehicleID
-          + "\nModel: " + vehicleArrayBuffer(x).model
-          + "\nNumbers of Tyres" + vehicleArrayBuffer(x).noTyres
-          + "\nFault" + vehicleArrayBuffer(x).fault
-          + "\nFixed?" + vehicleArrayBuffer(x).fixed
-        )
-      vehicleArrayBuffer(x).getClass.toString.substring(6) match {
-        case "Car" =>
-          outPut += ("\nNumber of Doors: " + vehicleArrayBuffer(x).asInstanceOf[Car].noDoors)
-        case "Bike" =>
-          outPut += ("\nNoSeats:" + vehicleArrayBuffer(x).asInstanceOf[Bike].noSeats)
+        "Vehicle ID: " + vehicle.vehicleID
+          + "\nModel: " + vehicle.model
+          + "\nNumbers of Tyres" + vehicle.noTyres
+          + "\nFault" + vehicle.fault
+          + "\nFixed?" + vehicle.fixed
+                  )
+      vehicle match {
+        case car: Car =>
+          outPut += ("\nNumber of Doors: " + car.noDoors)+ "\n" + "\n"
+        case bike: Bike =>
+          outPut += ("\nNoSeats:" + bike.noSeats)+ "\n" + "\n"
+
+        }
       }
-    }
+    )
 
-    for (y <- 0 to vehicleArrayBuffer.size - 1) {
+    customerArrayBuffer.foreach(customer => {
       outPut += (
-        "customer ID: " + customerArrayBuffer(y).customerID
-          + "\ncost: " + customerArrayBuffer(y).cost
-          + "\nFirst name" + customerArrayBuffer(y).firstName
-          + "\nSecond name" + customerArrayBuffer(y).secondName
-          + "\nAge" + customerArrayBuffer(y).age
-          + "\nAddress" + customerArrayBuffer(y).address
+        "customer ID: " + customer.customerID
+          + "\ncost: " + customer.cost
+          + "\nFirst name" + customer.firstName
+          + "\nSecond name" + customer.secondName
+          + "\nAge" + customer.age
+          + "\nAddress" + customer.address
+          + "\n"
+          + "\n"
         )
-    }
+      }
+    )
 
-    for (z <- 0 to employeeArrayBuffer.size - 1) {
+    employeeArrayBuffer.foreach (employee => {
       outPut += (
-        "Employee ID: " + employeeArrayBuffer(z).employeeID
-          + "\nFirst name" + employeeArrayBuffer(z).firstName
-          + "\nSecond name" + employeeArrayBuffer(z).secondName
-          + "\nAge" + employeeArrayBuffer(z).age
-          + "\nAddress" + employeeArrayBuffer(z).address
+        "Employee ID: " + employee.employeeID
+
+          + "\nFirst name" + employee.firstName
+          + "\nSecond name" + employee.secondName
+          + "\nAge" + employee.age
+          + "\nAddress" + employee.address
+          + "\n"
+          + "\n"
         )
-    }
+      }
+    )
     outPut
   }
 
-// Opening and closing the Garage
 
-def GarageOpening(openClose: Boolean) : String = {
-  true => println("garage is open")
-  false => println("garage is closed")
+  // Opening and closing the Garage
+
+  def GarageOpening(openClose: Boolean): Unit = {
+    (openClose) match {
+      case true => println("garage is open")
+      case false => println("garage is closed")
+      //case _ => println("woops")
+    }
   }
 }
 
+//Task 2
+
+//create new garage
 val garage = new Garage
 
 
+//adding vehicles
 var car1 = new Car(1, "ford", 4, 5, "faulty doodar", false)
 var bike1 = new Bike(2, "vroom vroom", 0, 1, "no tyres", false)
-
+var car2 = new Car(3, "mazaratti", 4, 2, "too fast", false)
 
 garage.addVehicle(car1)
 garage.addVehicle(bike1)
+garage.addVehicle(car2)
 garage.viewVehicles
 
+
+//adding customers
 var customer1 = new Customer(1, 30000, "Jack", "Whistlecraft", 30, "The Heart, Manchester")
 var customer2 = new Customer(2, 20, "Robin", "Watkins", 25, "Somewhere else, not in Manchester")
 
@@ -202,16 +251,27 @@ garage.addCustomer(customer1)
 garage.addCustomer(customer2)
 garage.viewCustomers
 
+
+//adding employees
 var employee1 = new Employee("e1", "greese monkey", "James", "Galager", 22, "Manchestar mate")
 
 garage.addEmployee(employee1)
 garage.viewEmployees
 
-//garage.removeVehicleByID(1)
-//garage.viewVehicles
 
-//garage.removeVehicleByType("Bike")
-//garage.viewVehicles
+//removing vehicles
+garage.removeVehicleByID(1)
+garage.viewVehicles
 
+garage.removeVehicleByType("Bike")
+garage.viewVehicles
+
+//print garage contents
 println(garage.toString)
+
+//opening or closing vehicle
+garage.GarageOpening(true)
+
+
+//Task 3
 
