@@ -65,32 +65,15 @@ class Bike(var vehicleID: Int, var model: String, var noTyres: Int, var noSeats:
   override def toString: String = {
    s"vehicleID: $vehicleID, model: $model, number of tyres: $noTyres, number of seats: $noSeats, fault: $fault, fixed?: $fixed"
   }
-
-
-}
-abstract class VehiclePart{
-
-class windshield(cost:Int,broken:Boolean)
-
-class exhaust(cost:Int, broken:Boolean)
-
-class piston(cost:Int, broken:Boolean)
-
-class transmission(cost:Int, broken:Boolean)
-
-class headLights(cost:Int, broken:Boolean)
-
-class breakLights(cost:Int, broken:Boolean)
-
-class rearAxel(cost:Int, broken:Boolean)
-
-class front(cost:Int, broken:Boolean)
-
-class gasket(cost:Int, broken:Boolean)
-
-class fuelLine(cost:Int, broken:Boolean)
 }
 
+
+class VehiclePart (var partName: String, var cost: Double, var broken:Boolean){
+
+  override def toString: String = {
+    s"partName: $partName, cost: $cost, broken: $broken"
+  }
+}
 
 
 
@@ -99,36 +82,47 @@ class fuelLine(cost:Int, broken:Boolean)
 class Garage {
   var vehicleArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Vehicle] //creates vehicle array buffer
 
-  def addVehicle(vehicle: Vehicle): Unit = { //adding vehicle function
+  def addVehicle(vehicle: Vehicle): Unit = {                                         //adding vehicle function
     vehicleArrayBuffer += vehicle
   }
 
-  def viewVehicles: Unit = { //view vehicles in garage
+  def viewVehicles: Unit = {                                                       //view vehicles in garage
     vehicleArrayBuffer.foreach(println)
   }
 
 
   var customerArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Customer] //creates customer array buffer
 
-  def addCustomer(customer: Customer): Unit = { //adding customer function
+  def addCustomer(customer: Customer): Unit = {                                   //adding customer function
     customerArrayBuffer += customer
   }
 
-  def viewCustomers: Unit = { //view customers function
+  def viewCustomers: Unit = {                                                      //view customers function
     customerArrayBuffer.foreach(println)
   }
 
 
   var employeeArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Employee] //creates employee array buffer
 
-  def addEmployee(employee: Employee): Unit = { //adding employee function
+  def addEmployee(employee: Employee): Unit = {                                    //adding employee function
     employeeArrayBuffer += employee
   }
 
-  def viewEmployees: Unit = { //view employees function
+  def viewEmployees: Unit = {                                                      //view employees function
     employeeArrayBuffer.foreach(println)
   }
 
+
+
+  var vehiclePartArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[VehiclePart] //creates employee array buffer
+
+  def add(vehiclePart: VehiclePart): Unit = {                                    //adding employee function
+    vehiclePartArrayBuffer += vehiclePart
+  }
+
+  def veiwVehicleParts: Unit = { //view employees function
+    vehiclePartArrayBuffer.foreach(println)
+  }
 
   // adding vehicle removal functionality by ID and class
 
@@ -246,9 +240,11 @@ garage.viewVehicles
 //adding customers
 var customer1 = new Customer(1, 30000, "Jack", "Whistlecraft", 30, "The Heart, Manchester")
 var customer2 = new Customer(2, 20, "Robin", "Watkins", 25, "Somewhere else, not in Manchester")
+var customer3 = new Customer(3, 500, "Esti", "Squinkica", 30, "Way too far away!")
 
 garage.addCustomer(customer1)
 garage.addCustomer(customer2)
+garage.addCustomer(customer3)
 garage.viewCustomers
 
 
@@ -274,4 +270,19 @@ garage.GarageOpening(true)
 
 
 //Task 3
+
+
+//adding parts to my garage
+var part1 = new VehiclePart("Windshield",200, false)
+var part2 = new VehiclePart("exhaust", 150, false)
+var part3 = new VehiclePart("piston", 75, false)
+var part4 = new VehiclePart("clutch", 600, false)
+var part5 = new VehiclePart("headLights", 55, false)
+var part6 = new VehiclePart("breakLights", 55, false)
+var part7 = new VehiclePart("rearAxel", 250, false)
+var part8 = new VehiclePart("FrontAxel", 250, false)
+var part9 = new VehiclePart("gasket", 175, false)
+var part10 = new VehiclePart("fuelLine", 85, false)
+
+garage.addVehiclePart(part1)
 
