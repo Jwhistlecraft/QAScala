@@ -1,4 +1,5 @@
-//Task 1
+import scala.collection.mutable.ListBuffer
+//TASK 1
 
 
 
@@ -10,17 +11,18 @@ abstract class Person {
   var age: Int
   var address: String
 
+
   def showPersonDetails {
     println(firstName, secondName, age, address)
    }
 }
 
-class Employee(var employeeID: String,var jobTitle: String,
+class Employee(var employeeID: String,available: Boolean, var jobTitle: String,
                var firstName: String, var secondName: String,
                var age: Int, var address: String ) extends Person {
 
-override def toString: String = { //enables the overriding of the inputs to be able to add in new data
-  s"EmployeeID $employeeID, JobTitle: $jobTitle, firstname: $firstName, SecondName: $secondName, Age: $age, Address: $address"
+override def toString: String = {                //enables the overriding of the inputs to be able to add in new data
+  s"EmployeeID $employeeID, Available? $available, JobTitle: $jobTitle, firstname: $firstName, SecondName: $secondName, Age: $age, Address: $address"
    }
 }
 
@@ -40,38 +42,52 @@ abstract class Vehicle {
   var vehicleID: Int
   var model: String
   var noTyres: Int
-  var fault: String
   var fixed: Boolean
 
+  var vehiclePartArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[VehiclePart]
+
+  def addVehiclePart(vehiclePart: VehiclePart): Unit = {
+    vehiclePartArrayBuffer += vehiclePart
+    val isItBroken = scala.util.Random
+    isItBroken.nextInt(2)
+    match {
+      case 1 => vehiclePartArrayBuffer(vehiclePartArrayBuffer.size - 1).broken = true
+      case 0 => vehiclePartArrayBuffer(vehiclePartArrayBuffer.size - 1).broken = false
+
+    }
+  }
+  def viewVehicleParts: Unit = {
+    vehiclePartArrayBuffer.foreach(a=>println(a))
+  }
+
   def showVehicleDetails {
-    println("vehicleID:" +vehicleID, "model:" +model, "number of tyres:" +noTyres, "fault:" +fault, "Is Fixed:" +fixed)
+    println("vehicleID:" +vehicleID, "model:" +model, "number of tyres:" +noTyres, "Is Fixed:" +fixed)
   }
 }
 
 
 class Car(var vehicleID: Int, var model: String,
-          var noTyres: Int, var noDoors: Int,
-          var fault: String, var fixed: Boolean) extends Vehicle {
+          var noTyres: Int, var noDoors: Int, var fixed: Boolean) extends Vehicle {
 
   override def toString: String = {
-    s"vehicleID: $vehicleID, model: $model, number of tyres:  $noTyres, number of doors:  $noDoors, fault:  $fault, fixed?: $fixed"
+    s"vehicleID: $vehicleID, model: $model, number of tyres:  $noTyres, number of doors:  $noDoors, fixed?: $fixed"
   }
 }
 
 
 class Bike(var vehicleID: Int, var model: String, var noTyres: Int, var noSeats: Int,
-           var fault: String, var fixed: Boolean) extends Vehicle {
+           var fixed: Boolean) extends Vehicle {
 
   override def toString: String = {
-   s"vehicleID: $vehicleID, model: $model, number of tyres: $noTyres, number of seats: $noSeats, fault: $fault, fixed?: $fixed"
+   s"vehicleID: $vehicleID, model: $model, number of tyres: $noTyres, number of seats: $noSeats, fixed?: $fixed"
   }
 }
 
-
-class VehiclePart (var partName: String, var cost: Double, var broken:Boolean){
+//vehicle part class
+class VehiclePart (var partName: String, var timeToFix: Double, var cost: Double, var broken: Boolean){
 
   override def toString: String = {
-    s"partName: $partName, cost: $cost, broken: $broken"
+    s"partName: $partName, time to fix: $timeToFix cost: $cost, broken: $broken"
   }
 }
 
@@ -80,57 +96,52 @@ class VehiclePart (var partName: String, var cost: Double, var broken:Boolean){
 // Garage class for all section 2 functionality
 
 class Garage {
-  var vehicleArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Vehicle] //creates vehicle array buffer
+  var vehicleArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Vehicle]               //creates vehicle array buffer
 
-  def addVehicle(vehicle: Vehicle): Unit = {                                         //adding vehicle function
+
+  //adding add vehicle functionality
+  def addVehicle(vehicle: Vehicle): Unit = {                                                   //adding vehicle function
     vehicleArrayBuffer += vehicle
+
+
   }
 
-  def viewVehicles: Unit = {                                                       //view vehicles in garage
-    vehicleArrayBuffer.foreach(println)
+  def viewVehicles: Unit = {                                                                  //view vehicles in garage
+    vehicleArrayBuffer.foreach(a=>println(a))
   }
 
+// adding add customer functionality
+  var customerArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Customer]
 
-  var customerArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Customer] //creates customer array buffer
-
-  def addCustomer(customer: Customer): Unit = {                                   //adding customer function
+  def addCustomer(customer: Customer): Unit = {
     customerArrayBuffer += customer
   }
 
-  def viewCustomers: Unit = {                                                      //view customers function
-    customerArrayBuffer.foreach(println)
+  def viewCustomers: Unit = {
+    customerArrayBuffer.foreach(a=>println(a))
   }
 
+//adding add employee functionality
+  var employeeArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Employee]
 
-  var employeeArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[Employee] //creates employee array buffer
-
-  def addEmployee(employee: Employee): Unit = {                                    //adding employee function
+  def addEmployee(employee: Employee): Unit = {
     employeeArrayBuffer += employee
   }
 
-  def viewEmployees: Unit = {                                                      //view employees function
-    employeeArrayBuffer.foreach(println)
+  def viewEmployees: Unit = {
+    employeeArrayBuffer.foreach(a=>println(a))
   }
 
 
 
-  var vehiclePartArrayBuffer = scala.collection.mutable.ArrayBuffer.empty[VehiclePart] //creates employee array buffer
-
-  def add(vehiclePart: VehiclePart): Unit = {                                    //adding employee function
-    vehiclePartArrayBuffer += vehiclePart
-  }
-
-  def veiwVehicleParts: Unit = { //view employees function
-    vehiclePartArrayBuffer.foreach(println)
-  }
 
   // adding vehicle removal functionality by ID and class
 
-  def removeVehicleByID(ID: Int): Unit = {                 //removing by ID function
+  def removeVehicleByID(ID: Int): Unit = {                                               //removing by ID function
     vehicleArrayBuffer = vehicleArrayBuffer.filter(x => !(x.vehicleID == ID))
   }
 
-  def removeVehicleByType(automobile: String): Unit = {    //removing by class function
+  def removeVehicleByType(automobile: String): Unit = {                                  //removing by class function
     automobile match {
       case "Car" => vehicleArrayBuffer = vehicleArrayBuffer.filter(x => x.isInstanceOf[Bike])
       case "Bike" => vehicleArrayBuffer = vehicleArrayBuffer.filter(x => x.isInstanceOf[Car])
@@ -165,7 +176,6 @@ class Garage {
         "Vehicle ID: " + vehicle.vehicleID
           + "\nModel: " + vehicle.model
           + "\nNumbers of Tyres" + vehicle.noTyres
-          + "\nFault" + vehicle.fault
           + "\nFixed?" + vehicle.fixed
                   )
       vehicle match {
@@ -212,24 +222,33 @@ class Garage {
   // Opening and closing the Garage
 
   def GarageOpening(openClose: Boolean): Unit = {
-    (openClose) match {
+    openClose match {
       case true => println("garage is open")
       case false => println("garage is closed")
-      //case _ => println("woops")
-    }
+      }
   }
+
+
 }
 
-//Task 2
+
+//TASK 2
 
 //create new garage
 val garage = new Garage
 
 
 //adding vehicles
-var car1 = new Car(1, "ford", 4, 5, "faulty doodar", false)
-var bike1 = new Bike(2, "vroom vroom", 0, 1, "no tyres", false)
-var car2 = new Car(3, "mazaratti", 4, 2, "too fast", false)
+var car1 = new Car(1, "ford", 4, 5, false)
+var bike1 = new Bike(2, "vroom vroom", 2, 1, false)
+var car2 = new Car(3, "mazaratti", 4, 3, false)
+var car3 = new Car(4,"Mustang", 4, 5, false)
+var bike2 = new Bike(5, "Honda", 2, 2, false)
+var bike3 = new Bike(6, "Triumph", 2, 2,false)
+var car4 = new Car(7, "mercedez", 4, 5, false)
+var car5 = new Car(8, "Farrari", 4, 3, false)
+var bike4 = new Car(9, "Yamaha", 2, 3, false)
+var bike5 = new Bike(10, "GoldWing", 2, 3, false)
 
 garage.addVehicle(car1)
 garage.addVehicle(bike1)
@@ -249,40 +268,196 @@ garage.viewCustomers
 
 
 //adding employees
-var employee1 = new Employee("e1", "greese monkey", "James", "Galager", 22, "Manchestar mate")
+var employee1 = new Employee("e1", true, "long jobs", "Spider", "Man", 22, "Manchestar")
+var employee2 = new Employee("e2", true, "medium jobs", "Bat", "Man", 86, "Gothom")
+var employee3 = new Employee("e3", true, "short jobs", "Super", "Man", 1000, "Whole world")
 
 garage.addEmployee(employee1)
 garage.viewEmployees
 
 
 //removing vehicles
-garage.removeVehicleByID(1)
-garage.viewVehicles
+//garage.removeVehicleByID(1)
+//garage.viewVehicles
 
-garage.removeVehicleByType("Bike")
-garage.viewVehicles
+//garage.removeVehicleByType("Bike")
+//garage.viewVehicles
 
 //print garage contents
-println(garage.toString)
+//println(garage.toString)
 
 //opening or closing vehicle
+//garage.GarageOpening(true)
+
+
+//RUNNING THE GARAGE
+
+//Open the garage
 garage.GarageOpening(true)
 
+//create list of all vehicles and there faults
 
-//Task 3
+//check availability of employees and assign vehicle to available staff
+
+//repeat so all staff are occupied and repeat until all work is complete
+
+//close garage
+garage.GarageOpening(false)
+// print when a vehicle was attending and by whom
+
+// print out how much each repair cost and total cost
+
+
+
+
+
+
+
+//TASK 3
 
 
 //adding parts to my garage
-var part1 = new VehiclePart("Windshield",200, false)
-var part2 = new VehiclePart("exhaust", 150, false)
-var part3 = new VehiclePart("piston", 75, false)
-var part4 = new VehiclePart("clutch", 600, false)
-var part5 = new VehiclePart("headLights", 55, false)
-var part6 = new VehiclePart("breakLights", 55, false)
-var part7 = new VehiclePart("rearAxel", 250, false)
-var part8 = new VehiclePart("FrontAxel", 250, false)
-var part9 = new VehiclePart("gasket", 175, false)
-var part10 = new VehiclePart("fuelLine", 85, false)
+var part1 = new VehiclePart("Windshield",6,200,false)
+var part2 = new VehiclePart("exhaust",8, 150, false )
+var part3 = new VehiclePart("piston", 12, 75, false )
+var part4 = new VehiclePart("clutch", 11, 600, false)
+var part5 = new VehiclePart("headLights", 2, 55,false)
+var part6 = new VehiclePart("breakLights",2, 55,false)
+var part7 = new VehiclePart("rearAxel",7, 250, false)
+var part8 = new VehiclePart("FrontAxel",7, 250, false)
+var part9 = new VehiclePart("gasket", 9, 175, false)
+var part10 = new VehiclePart("fuelLine", 4, 85, false)
 
-garage.addVehiclePart(part1)
+car1.addVehiclePart(part1)
+car1.addVehiclePart(part2)
+car1.addVehiclePart(part3)
+car1.addVehiclePart(part4)
+car1.addVehiclePart(part5)
+car1.addVehiclePart(part6)
+car1.addVehiclePart(part7)
+car1.addVehiclePart(part8)
+car1.addVehiclePart(part9)
+car1.addVehiclePart(part10)
+
+car1.viewVehicleParts
+
+car2.addVehiclePart(part1)
+car2.addVehiclePart(part2)
+car2.addVehiclePart(part3)
+car2.addVehiclePart(part4)
+car2.addVehiclePart(part5)
+car2.addVehiclePart(part6)
+car2.addVehiclePart(part7)
+car2.addVehiclePart(part8)
+car2.addVehiclePart(part9)
+car2.addVehiclePart(part10)
+
+car2.viewVehicleParts
+
+car3.addVehiclePart(part1)
+car3.addVehiclePart(part2)
+car3.addVehiclePart(part3)
+car3.addVehiclePart(part4)
+car3.addVehiclePart(part5)
+car3.addVehiclePart(part6)
+car3.addVehiclePart(part7)
+car3.addVehiclePart(part8)
+car3.addVehiclePart(part9)
+car3.addVehiclePart(part10)
+
+car3.viewVehicleParts
+
+car4.addVehiclePart(part1)
+car4.addVehiclePart(part2)
+car4.addVehiclePart(part3)
+car4.addVehiclePart(part4)
+car4.addVehiclePart(part5)
+car4.addVehiclePart(part6)
+car4.addVehiclePart(part7)
+car4.addVehiclePart(part8)
+car4.addVehiclePart(part9)
+car4.addVehiclePart(part10)
+
+car4.viewVehicleParts
+
+car5.addVehiclePart(part1)
+car5.addVehiclePart(part2)
+car5.addVehiclePart(part3)
+car5.addVehiclePart(part4)
+car5.addVehiclePart(part5)
+car5.addVehiclePart(part6)
+car5.addVehiclePart(part7)
+car5.addVehiclePart(part8)
+car5.addVehiclePart(part9)
+car5.addVehiclePart(part10)
+
+car5.viewVehicleParts
+
+bike1.addVehiclePart(part1)
+bike1.addVehiclePart(part2)
+bike1.addVehiclePart(part3)
+bike1.addVehiclePart(part4)
+bike1.addVehiclePart(part5)
+bike1.addVehiclePart(part6)
+bike1.addVehiclePart(part7)
+bike1.addVehiclePart(part8)
+bike1.addVehiclePart(part9)
+bike1.addVehiclePart(part10)
+
+bike1.viewVehicleParts
+
+bike2.addVehiclePart(part1)
+bike2.addVehiclePart(part2)
+bike2.addVehiclePart(part3)
+bike2.addVehiclePart(part4)
+bike2.addVehiclePart(part5)
+bike2.addVehiclePart(part6)
+bike2.addVehiclePart(part7)
+bike2.addVehiclePart(part8)
+bike2.addVehiclePart(part9)
+bike2.addVehiclePart(part10)
+
+bike2.viewVehicleParts
+
+bike3.addVehiclePart(part1)
+bike3.addVehiclePart(part2)
+bike3.addVehiclePart(part3)
+bike3.addVehiclePart(part4)
+bike3.addVehiclePart(part5)
+bike3.addVehiclePart(part6)
+bike3.addVehiclePart(part7)
+bike3.addVehiclePart(part8)
+bike3.addVehiclePart(part9)
+bike3.addVehiclePart(part10)
+
+bike3.viewVehicleParts
+
+bike4.addVehiclePart(part1)
+bike4.addVehiclePart(part2)
+bike4.addVehiclePart(part3)
+bike4.addVehiclePart(part4)
+bike4.addVehiclePart(part5)
+bike4.addVehiclePart(part6)
+bike4.addVehiclePart(part7)
+bike4.addVehiclePart(part8)
+bike4.addVehiclePart(part9)
+bike4.addVehiclePart(part10)
+
+bike4.viewVehicleParts
+
+bike5.addVehiclePart(part1)
+bike5.addVehiclePart(part2)
+bike5.addVehiclePart(part3)
+bike5.addVehiclePart(part4)
+bike5.addVehiclePart(part5)
+bike5.addVehiclePart(part6)
+bike5.addVehiclePart(part7)
+bike5.addVehiclePart(part8)
+bike5.addVehiclePart(part9)
+bike5.addVehiclePart(part10)
+
+bike5.viewVehicleParts
+
+
+
 
