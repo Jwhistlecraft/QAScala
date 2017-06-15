@@ -228,6 +228,22 @@ class Garage {
       }
   }
 
+  //RUNNING THE GARAGE
+
+  //Open the garage
+  GarageOpening(true)
+
+  //create list of all vehicles and there faults
+ def workLoad= vehicleArrayBuffer
+  //check availability of employees and assign vehicle to available staff
+
+  //repeat so all staff are occupied and repeat until all work is complete
+
+  //close garage
+ GarageOpening(false)
+  // print when a vehicle was attending and by whom
+
+  // print out how much each repair cost and total cost
 
 }
 
@@ -284,37 +300,12 @@ garage.viewEmployees
 //garage.viewVehicles
 
 //print garage contents
-//println(garage.toString)
+println(garage.toString)
 
-//opening or closing vehicle
+//opening or closing garage
 //garage.GarageOpening(true)
 
-
-//RUNNING THE GARAGE
-
-//Open the garage
-garage.GarageOpening(true)
-
-//create list of all vehicles and there faults
-
-//check availability of employees and assign vehicle to available staff
-
-//repeat so all staff are occupied and repeat until all work is complete
-
-//close garage
-garage.GarageOpening(false)
-// print when a vehicle was attending and by whom
-
-// print out how much each repair cost and total cost
-
-
-
-
-
-
-
 //TASK 3
-
 
 //adding parts to my garage
 var part1 = new VehiclePart("Windshield",6,200,false)
